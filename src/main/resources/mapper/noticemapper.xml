@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.NoticeRepository">
+    <insert id="insert" parameterType="noticeDto">
+        INSERT INTO company_notice VALUES (0,#{noticeTitle},#{noticeContent},#{noticeMemberId},NOW())
+    </insert>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM company_notice WHERE notice_idx=#{noticeIdx}
+    </delete>
+    <update id="update" parameterType="noticeDto">
+        UPDATE company_notice SET notice_title=#{noticeTitle},notice_content=#{noticeContent} WHERE notice_idx=#{noticeIdx}
+    </update>
+    <select id="selectOne" parameterType="Integer" resultType="noticeDto">
+        SELECT * FROM company_notice WHERE notice_idx=#{noticeIdx}
+    </select>
+    <select id="select" resultType="noticeDto">
+        SELECT * FROM company_notice
+    </select>
+    <select id="searchByAll" parameterType="String" resultType="noticeDto">
+        SELECT * FROM company_notice WHERE notice_title LIKE CONCAT('%', #{s}, '%') OR notice_content LIKE CONCAT('%', #{s}, '%') OR notice_member_id LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByTitle" parameterType="String" resultType="noticeDto">
+        SELECT * FROM company_notice WHERE notice_title LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByContent" parameterType="String" resultType="noticeDto">
+        SELECT * FROM company_notice WHERE notice_content LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByWriter" parameterType="String" resultType="noticeDto">
+        SELECT * FROM company_notice WHERE notice_member_id LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="sortByIdAsc" resultType="noticeDto">
+        SELECT * FROM company_notice ORDER BY notice_idx ASC
+    </select>
+    <select id="sortByIdDesc" resultType="noticeDto">
+        SELECT * FROM company_notice ORDER BY notice_idx DESC
+    </select>
+    <select id="sortByDateAsc" resultType="noticeDto">
+        SELECT * FROM company_notice ORDER BY notice_date ASC
+    </select>
+    <select id="sortByDateDesc" resultType="noticeDto">
+        SELECT * FROM company_notice ORDER BY notice_date DESC
+    </select>
+    <select id="listUpFive" resultType="noticeDto">
+        SELECT * FROM company_notice ORDER BY notice_idx ASC LIMIT 5;
+    </select>
+    <select id="listUpTen" resultType="noticeDto">
+        SELECT * FROM company_notice ORDER BY notice_idx ASC LIMIT 10;
+    </select>
+</mapper>

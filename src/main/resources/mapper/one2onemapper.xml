@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.One2oneRepository">
+
+    <insert id="insert" parameterType="one2oneDto">
+        INSERT INTO company_one2one VALUES (0,#{one2oneName},#{one2onePhone},#{one2oneEmail},#{one2oneAddress},#{one2oneTitle},#{one2oneContent},NOW())
+    </insert>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM company_one2one WHERE one2one_idx=#{one2oneIdx}
+    </delete>
+    <update id="update" parameterType="one2oneDto">
+        UPDATE company_one2one SET one2one_name=#{one2oneName},one2one_phone=#{one2onePhone}, one2one_email=#{one2oneEmail}, one2one_address=#{one2oneAddress}, one2one_title=#{one2oneTitle}, one2one_content=#{one2oneContent}, one2one_date=#{one2oneDate} WHERE one2one_idx=#{one2oneIdx}
+    </update>
+    <select id="selectOne" parameterType="Integer" resultType="one2oneDto">
+        SELECT * FROM company_one2one WHERE one2one_idx=#{one2oneIdx}
+    </select>
+    <select id="select" resultType="one2oneDto">
+        SELECT * FROM company_one2one
+    </select>
+
+</mapper>

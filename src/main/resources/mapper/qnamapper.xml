@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.QnaRepository">
+
+    <insert id="insert" parameterType="qnaDto">
+        INSERT INTO company_qna VALUES (0,#{qnaName},#{qnaPw},#{qnaTitle},#{qnaContent},NOW())
+    </insert>
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM company_qna WHERE qna_idx=#{qnaIdx}
+    </delete>
+    <update id="update" parameterType="qnaDto">
+        UPDATE company_qna SET qna_name=#{qnaName},qna_pw=#{qnaPw}, qna_title=#{qnaTitle}, qna_content=#{qnaContent} WHERE qna_idx=#{qnaIdx}
+    </update>
+    <select id="selectOne" parameterType="Integer" resultType="qnaDto">
+        SELECT * FROM company_qna WHERE qna_idx=#{qnaIdx}
+    </select>
+    <select id="select" resultType="qnaDto">
+        SELECT * FROM company_qna
+    </select>
+    <select id="checkPw" parameterType="Integer" resultType="String">
+        SELECT qna_pw FROM company_qna WHERE qna_idx=#{qnaIdx}
+    </select>
+    <select id="searchByTitle" parameterType="String" resultType="qnaDto">
+        SELECT * FROM company_qna WHERE qna_title LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByContent" parameterType="String" resultType="qnaDto">
+        SELECT * FROM company_qna WHERE qna_content LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByWriter" parameterType="String" resultType="qnaDto">
+        SELECT * FROM company_qna WHERE qna_name LIKE CONCAT('%', #{s}, '%')
+    </select>
+
+</mapper>

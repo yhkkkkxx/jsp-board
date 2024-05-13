@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.MemberAdminRepository">
+
+    <insert id="insert" parameterType="memberAdminDto">
+        INSERT INTO company_member_admin VALUES (0,#{memberId},#{memberPw},#{memberName},#{memberEmail},#{memberJoinDate},NOW())
+    </insert>
+    <delete id="delete" parameterType="String">
+        DELETE FROM company_member_admin WHERE member_id=#{memberId}
+    </delete>
+    <update id="update" parameterType="memberAdminDto">
+        UPDATE company_member_admin SET member_pw=#{memberPw},member_name=#{memberName}, member_email=#{memberEmail}, member_join_date=#{memberJoinDate} WHERE member_id=#{memberId}
+    </update>
+    <select id="selectOne" parameterType="String" resultType="memberAdminDto">
+        SELECT * FROM company_member_admin WHERE member_id=#{memberId}
+    </select>
+    <select id="select" resultType="memberAdminDto">
+        SELECT * FROM company_member_admin
+    </select>
+
+</mapper>

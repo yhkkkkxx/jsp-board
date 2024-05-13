@@ -1,0 +1,31 @@
+package com.hana.Member;
+
+import com.hana.app.data.dto.MemberDto;
+import com.hana.app.service.MemberService;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.text.SimpleDateFormat;
+
+import static org.assertj.core.util.DateUtil.now;
+
+@SpringBootTest
+@Slf4j
+class UpdateTests {
+    @Autowired
+    MemberService memberService;
+
+    @Test
+    void contextLoads() throws Exception {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        String dateString = "2000/03/10";
+        MemberDto memberDto = MemberDto.builder().memberId("kim").memberPw("0310").memberName("khy").memberEmail("khy@gmail.com").memberEmailReceive(0).memberPwQuestion(0).memberPwAnswer("0").memberGender("female").memberBirthDate(formatter.parse(dateString)).memberJoinDate(now()).build();
+        memberService.modify(memberDto);
+        memberService.get();
+
+        log.info("Test----------------------------------------");
+    }
+
+}

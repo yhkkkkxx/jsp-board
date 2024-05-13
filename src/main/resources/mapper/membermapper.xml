@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hana.app.repository.MemberRepository">
+    <select id="findId" parameterType="String" resultType="String">
+        SELECT member_id FROM company_member WHERE member_name=#{memberName} AND member_email=#{memberEmail}
+    </select>
+    <select id="findPw" parameterType="String" resultType="String">
+        SELECT member_pw FROM company_member WHERE member_name=#{memberName} AND member_id=#{memberId} AND member_email=#{memberEmail}
+    </select>
+    <insert id="insert" parameterType="memberDto">
+        INSERT INTO company_member VALUES (0,#{memberId},#{memberPw},#{memberName},#{memberEmail},#{memberEmailReceive},#{memberPwQuestion},#{memberPwAnswer},#{memberGender},#{memberBirthDate},NOW())
+    </insert>
+    <delete id="delete" parameterType="String">
+        DELETE FROM company_member WHERE member_id=#{memberId}
+    </delete>
+    <update id="update" parameterType="memberDto">
+        UPDATE company_member SET member_pw=#{memberPw},member_name=#{memberName}, member_email=#{memberEmail}, member_email_receive=#{memberEmailReceive}, member_pw_question=#{memberPwQuestion}, member_pw_answer=#{memberPwAnswer}, member_gender=#{memberGender}, member_birth_date=#{memberBirthDate}, member_join_date=#{memberJoinDate} WHERE member_id=#{memberId}
+    </update>
+    <select id="selectOne" parameterType="String" resultType="memberDto">
+        SELECT * FROM company_member WHERE member_id=#{memberId}
+    </select>
+    <select id="select" resultType="memberDto">
+        SELECT * FROM company_member
+    </select>
+    <select id="searchByAll" parameterType="String" resultType="memberDto">
+        SELECT * FROM company_member WHERE member_id LIKE CONCAT('%', #{s}, '%') OR member_name LIKE CONCAT('%', #{s}, '%') OR member_email LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchById" parameterType="String" resultType="memberDto">
+        SELECT * FROM company_member WHERE member_id LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByName" parameterType="String" resultType="memberDto">
+        SELECT * FROM company_member WHERE member_name LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="searchByEmail" parameterType="String" resultType="memberDto">
+        SELECT * FROM company_member WHERE member_email LIKE CONCAT('%', #{s}, '%')
+    </select>
+    <select id="sortByIdAsc" resultType="memberDto">
+        SELECT * FROM company_member ORDER BY member_id ASC
+    </select>
+    <select id="sortByIdDesc" resultType="memberDto">
+        SELECT * FROM company_member ORDER BY member_id DESC
+    </select>
+    <select id="sortByJoinDateAsc" resultType="memberDto">
+        SELECT * FROM company_member ORDER BY member_join_date ASC
+    </select>
+    <select id="sortByJoinDateDesc" resultType="memberDto">
+        SELECT * FROM company_member ORDER BY member_join_date DESC
+    </select>
+    <select id="listUpFive" resultType="memberDto">
+        SELECT * FROM company_member ORDER BY member_idx ASC LIMIT 5;
+    </select>
+    <select id="listUpTen" resultType="memberDto">
+        SELECT * FROM company_member ORDER BY member_idx ASC LIMIT 10;
+    </select>
+</mapper>
